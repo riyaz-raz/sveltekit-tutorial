@@ -1,0 +1,520 @@
+<script lang="ts" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+    import Header from '$lib/components/Header.svelte';
+
+    import type { PageProps } from './$types';
+
+    let { data }: PageProps = $props();
+</script>
+
+<Header />
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/logo.webp" />
+    <title>Markuply</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --shadow-color: 208deg 22% 58%;
+        --shadow-elevation-low: 0.3px 0.5px 0.7px
+            hsl(var(--shadow-color) / 0.34),
+          0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+          1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+        --shadow-elevation-medium: 0.3px 0.5px 0.7px
+            hsl(var(--shadow-color) / 0.36),
+          0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+          2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+          5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+      }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #0c0c0d;
+        color: #f9f9fa;
+      }
+
+      nav.navbar {
+        background-color: #1b1b1d;
+        padding: 1rem 2rem;
+      }
+
+      nav .navbar-brand {
+        font-weight: bold;
+        font-size: 1.4rem;
+        color: #fff;
+      }
+
+      nav .nav-link {
+        color: #d7d7db !important;
+        margin-left: 1rem;
+      }
+
+      /* Dropdown background */
+      .dropdown-menu {
+        background-color: #1b1b1d; /* dark background like nav */
+        border: none;
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3); /* subtle blue shadow */
+        min-width: 10rem;
+        padding: 0.25rem 0;
+        border-radius: 0.25rem;
+      }
+
+      /* Dropdown links style */
+      .dropdown-item {
+        color: #d7d7db; /* light gray text */
+        padding: 0.5rem 1.5rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: background-color 0.2s, color 0.2s;
+      }
+
+      /* Hover and focus */
+      .dropdown-item:hover,
+      .dropdown-item:focus {
+        background-color: #3b82f6; /* bright blue highlight */
+        color: #fff;
+        outline: none;
+      }
+
+      /* Dropdown toggle (Learn) link styling */
+      .navbar-nav .dropdown-toggle {
+        color: #d7d7db !important;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+
+      .navbar-nav .dropdown-toggle:hover,
+      .navbar-nav .dropdown-toggle:focus {
+        color: #3b82f6 !important;
+        text-decoration: none;
+        outline: none;
+      }
+
+      .navbar-nav .dropdown-toggle::after {
+        display: none;
+      }
+
+      .hero {
+        padding: 4rem 2rem 2rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        color: #d7d7db;
+      }
+
+      .card-grid {
+        padding: 2rem 1rem;
+      }
+
+      .card {
+        background-color: #1e1e20;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: transform 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 0.5rem #3b82f6;
+      }
+
+      .article-card {
+        background-color: #1e1e20;
+        color: #fff;
+        border: 1px solid white;
+        border-radius: 5px;
+        transition: transform 0.2s;
+      }
+
+      .article-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 0.5rem white;
+      }
+
+      footer {
+        background-color: #1b1b1d;
+        color: #cfcfd1;
+        padding: 3rem 2rem 2rem;
+      }
+
+      .footer-logo {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      .footer-social i {
+        font-size: 1.3rem;
+        margin-right: 0.6rem;
+        color: #fff;
+      }
+
+      .footer-links a {
+        display: block;
+        color: #cfcfd1;
+        text-decoration: none;
+        margin: 0.3rem 0;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #444;
+        padding-top: 1rem;
+        margin-top: 2rem;
+        font-size: 0.875rem;
+      }
+
+      .card-links,
+      .card-links:hover {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+      .button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: transparent;
+        padding: 1.4rem 2.2rem;
+        overflow: hidden;
+        border-radius: 100vmax;
+        box-shadow: var(--shadow-elevation-high);
+        transition: box-shadow 0.2s ease-in-out;
+        text-decoration: none;
+      }
+
+      .button::before,
+      .button::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+
+      .button::before {
+        z-index: 1;
+        right: -100%;
+        background: linear-gradient(
+          to right,
+          #9900f0 0%,
+          #ff85b3 50%,
+          #9900f0 100%
+        );
+        background-size: 50% 100%;
+        animation: scroll 1.2s infinite linear;
+      }
+
+      .button::after {
+        z-index: 2;
+        inset: 5px;
+        border-radius: 100vmax;
+        background-color: black;
+        transition: inset 0.2s ease-in-out;
+      }
+
+      .button span {
+        z-index: 3;
+        color: white;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .button:hover {
+        box-shadow: var(--shadow-elevation-medium);
+      }
+
+      .button:hover::after {
+        inset: 8px;
+      }
+
+      @keyframes scroll {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      #ViewOnGit {
+        height: 50px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main Layout Wrapper -->
+    <div class="page-wrap d-flex flex-column min-vh-100">
+      <!-- Header -->
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand me-4" href="#">Markuply</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-between"
+            id="navbarNav"
+          >
+            <ul class="navbar-nav me-auto">
+              <!-- <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Learn
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="Learn/html.html">HTML</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="Learn/css.html">CSS</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="Learn/javascript.html"
+                      >JavaScript</a
+                    >
+                  </li>
+                </ul>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="Playground/index.html">Playground</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Community/index.html">Community</a>
+              </li>
+            </ul>
+            <div className="d-flex">
+              <a
+                id="ViewOnGit"
+                class="nav-link button"
+                href="https://github.com/Prathewsh/markuply"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>View on Github</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <section class="hero">
+        <h1>Your blueprint for a better web.</h1>
+        <p>
+          A fun, beginner-friendly space to learn, play, and build — totally
+          free, no ads ever.
+        </p>
+      </section>
+
+      <!-- About Section -->
+      <section class="container my-5">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-8">
+            <p class="text-secondary">
+              No frameworks, no pressure — just pure HTML, CSS, and JavaScript
+              magic. Explore games, try mini projects, or share something
+              awesome with the community. Markuply is all about learning by
+              doing — the fun way.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards -->
+      <section class="container card-grid flex-grow-1">
+        <div class="row g-4">
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="Learn/index.html">
+              <div class="card p-3 h-100">
+                <h5>Jump In</h5>
+                <p>
+                  New to coding? No worries! Start with simple HTML, CSS, and JS
+                  projects — learn by doing in minutes.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="Playground/index.html">
+              <div class="card p-3 h-100">
+                <h5>Playground</h5>
+                <p>
+                  Try out fun mini-games and creative tools. It's your sandbox
+                  to experiment, play, and learn.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="code_editor.html">
+              <div class="card p-3 h-100 w-100">
+                <h5>Live Code Editor</h5>
+                <p>
+                  Write, edit, and run code instantly in your browser. Perfect
+                  for trying out ideas, debugging, or learning by doing.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Articles -->
+      <!-- <section class="container card-grid flex-grow-1">
+        <h2 class="mb-5">Latest articles</h2>
+        <div class="row g-4">
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="Learn/index.html">
+              <div class="article-card p-3 h-100">
+                <h5>JavaScript Temporal is coming</h5>
+                <p>
+                  New to coding? No worries! Start with simple HTML, CSS, and JS
+                  projects — learn by doing in minutes.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="Playground/index.html">
+              <div class="article-card p-3 h-100">
+                <h5>CSS anchor positioning</h5>
+                <p>
+                  Try out fun mini-games and creative tools. It's your sandbox
+                  to experiment, play, and learn.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="code_editor.html">
+              <div class="article-card p-3 h-100 w-100">
+                <h5>Using the View Transition API</h5>
+                <p>
+                  Write, edit, and run code instantly in your browser. Perfect
+                  for trying out ideas, debugging, or learning by doing.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="row g-4 my-2">
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="Learn/index.html">
+              <div class="article-card p-3 h-100">
+                <h5>Jump In</h5>
+                <p>
+                  New to coding? No worries! Start with simple HTML, CSS, and JS
+                  projects — learn by doing in minutes.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="Playground/index.html">
+              <div class="article-card p-3 h-100">
+                <h5>Playground</h5>
+                <p>
+                  Try out fun mini-games and creative tools. It's your sandbox
+                  to experiment, play, and learn.
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 d-flex">
+            <a class="card-links w-100" href="code_editor.html">
+              <div class="article-card p-3 h-100 w-100">
+                <h5>Live Code Editor</h5>
+                <p>
+                  Write, edit, and run code instantly in your browser. Perfect
+                  for trying out ideas, debugging, or learning by doing.
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section> -->
+    </div>
+    <!-- End page-wrap -->
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 mb-4">
+            <div class="footer-logo">markuply</div>
+            <p>Your blueprint for a better web.</p>
+            <div class="footer-social mt-2">
+              <i class="bi bi-twitter"></i>
+              <i class="bi bi-github"></i>
+              <i class="bi bi-globe"></i>
+              <i class="bi bi-rss"></i>
+            </div>
+          </div>
+          <div class="col-md-2 footer-links mb-4">
+            <strong>Markuply</strong>
+            <a href="about.html">About</a>
+            <a href="#">Blog</a>
+          </div>
+          <div class="col-md-2 footer-links mb-4">
+            <strong>Support</strong>
+            <a href="#">Help Center</a>
+            <a href="#">Report an Issue</a>
+          </div>
+          <div class="col-md-2 footer-links mb-4">
+            <strong>Community</strong>
+            <a href="#">Forums</a>
+            <a href="https://discord.gg/Mk4xU8qwaF">Discord</a>
+          </div>
+          <div class="col-md-3 footer-links mb-4">
+            <strong>Developers</strong>
+            <a href="#">Docs</a>
+            <a href="status.html">Status</a>
+          </div>
+        </div>
+
+        <div
+          class="footer-bottom d-flex flex-wrap justify-content-between align-items-center"
+        >
+          <div>
+            &copy; 2025 Markuply. All rights reserved. Built with ❤️ for
+            developers.
+          </div>
+          <!-- <div>
+            <a href="#">Privacy</a> <br />
+            <a href="#">Terms</a>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
